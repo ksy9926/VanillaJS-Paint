@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 const colors = document.querySelectorAll(".jsColor");
 const range = document.querySelector("#jsRange");
 const mode = document.querySelector("#jsMode");
+const saveBtn = document.querySelector("#jsSave");
 
 const INITIAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 500;
@@ -68,12 +69,28 @@ function handleCanvasClick(event) {
   }
 }
 
+// 이미지를 우클릭해서 다운받기 금지
+function handleContextMenu(event) {
+  event.preventDefault();
+}
+
+function handleSaveClick(event) {
+  // 괄호안을 비우면 png파일
+  const image = canvas.toDataURL("image/jpeg");
+  const link = document.createElement("a");
+  link.href = image;
+  // 이모지 입력 win + ;
+  link.download = "PaintJS[✨]";
+  link.click();
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("click", handleCanvasClick);
+  canvas.addEventListener("contextmenu", handleContextMenu);
 }
 
 Array.from(colors).forEach((color) =>
@@ -90,4 +107,8 @@ if (range) {
 
 if (mode) {
   mode.addEventListener("click", handleModeClick);
+}
+
+if (saveBtn) {
+  saveBtn.addEventListener("click", handleSaveClick);
 }
