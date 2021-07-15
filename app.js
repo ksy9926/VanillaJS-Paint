@@ -3,6 +3,9 @@ let painting = false;
 
 const ctx = canvas.getContext("2d");
 
+canvas.width = 500;
+canvas.height = 500;
+
 ctx.strokeStyle = "#2c2c2c";
 ctx.lineWidth = 2.5;
 
@@ -17,7 +20,6 @@ function startPainting(event) {
 function onMouseMove(event) {
   const x = event.offsetX;
   const y = event.offsetY;
-  console.log(x, y);
   if (!painting) {
     ctx.beginPath();
     ctx.moveTo(x, y);
